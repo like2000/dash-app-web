@@ -53,6 +53,7 @@ def create_app():
 
     register_blueprints(server)
 
-    server = dash_app1.dash_app.Add_Dash(server)
+    # server = dash_app1.dash_example.get_covid_dataset()
+    server = dash_app1.dash_appl.Add_Dash(server)
 
     return server
