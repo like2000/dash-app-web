@@ -8,7 +8,7 @@
 ![Dash](https://img.shields.io/badge/Dash-v1.0.2-blue.svg?longCache=true&logo=python&longCache=true&style=flat-square&logoColor=white&colorB=5e81ac&colorA=4c566a)
 ![Plotly](https://img.shields.io/badge/Plotly-v3.7.1-blue.svg?longCache=true&logo=python&longCache=true&style=flat-square&logoColor=white&colorB=5e81ac&colorA=4c566a)
 
-![Dash Embedded Flask](dash_web_app/static/images/stats.jpeg)
+![Dash Embedded Flask](dash_web_app/base/static/images/stats.jpeg)
 
 
 ## Getting Started

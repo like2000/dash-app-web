@@ -5,6 +5,11 @@ from urllib.error import HTTPError
 import dash_html_components as html
 import dash_table
 import pandas as pd
+from flask import Flask
+
+
+def Add_Dash(server: Flask):
+    ...
 
 
 def layout(callback):
@@ -19,6 +24,30 @@ def layout(callback):
 
 def get_covid_dataset():
     arr = ['This is an example Plot.ly Dash App.']
+    arr.append('{% extends "layout.html" %}')
+
+    # {% block body %}
+    #
+    # {{ super() }}
+    #
+    # <!-- padding-right = 10% + 10% / 0.8 -->
+    # <div class="w3-container w3-light-gray w3-medium">
+    #
+    #     <br>
+    #
+    #     <button class="w3-button w3-centering w3-blue-gray material-icons"
+    #             style="width: 180px; height: 40px; border: solid 1px darkslategray; margin: auto; display: block;">home
+    #     </button>
+    #
+    #     <br>
+    #
+    #     <nav>
+    #         <a href="/"><i class="fas fa-home"></i> Home</a>
+    #         <a href="/dash_app/"><i class="fas fa-chart-line"></i> Embdedded Plotly Dash</a>
+    #     </nav>
+    # </div>
+    #
+    # {% endblock %}
 
     today = pd.to_datetime('today').strftime('%Y-%m-%d')
     link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
