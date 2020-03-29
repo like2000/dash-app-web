@@ -8,7 +8,7 @@ from . import blueprint
 def index():
     """Landing page."""
     return render_template(
-        'base/templates/index.html',
+        'index.html',
         template='home-template',
         title='Plotly Flask Tutorial.',
         body="This is an example homepage served with Flask."

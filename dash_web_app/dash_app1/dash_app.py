@@ -8,13 +8,14 @@ from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask
 
-url_base = '/dash/app1'
+url_base = '/dash/app1/'
 
 
 def get_covid_dataset():
     arr = ['This is an example Plotly Dash App.']
 
     today = pd.to_datetime('today').strftime('%Y-%m-%d')
+    today = (pd.to_datetime('today') - pd.to_timedelta('1 days')).strftime('%Y-%m-%d')
     link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
     print(f"\n*** Searching file {link}...")
 
@@ -49,6 +50,7 @@ layout = html.Div([
 
 def Add_Dash(server: Flask):
     app = Dash(server=server, url_base_pathname=url_base)
+    app.layout = layout
 
     @app.callback(
         Output('target', 'children'),
