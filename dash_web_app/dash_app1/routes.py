@@ -3,12 +3,7 @@ from flask import render_template
 from . import blueprint
 
 
-@blueprint.route("/dash_app")
+@blueprint.route("/app1")
 def dash_app():
     """Landing page."""
-    return render_template(
-        'base/templates/index.html',
-        template='home-template',
-        title='Plotly Flask Tutorial.',
-        body="This is an example homepage served with Flask."
-    )
+    return render_template('dash_app1.html', dash_url=dash_app.url_base)

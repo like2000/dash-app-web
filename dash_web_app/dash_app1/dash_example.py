@@ -5,11 +5,6 @@ from urllib.error import HTTPError
 import dash_html_components as html
 import dash_table
 import pandas as pd
-from flask import Flask
-
-
-def Add_Dash(server: Flask):
-    ...
 
 
 def layout(callback):
