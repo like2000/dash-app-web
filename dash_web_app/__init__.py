@@ -10,9 +10,9 @@ from dash_web_app.dash_app1.dash_layout import html_layout
 
 
 def register_blueprints(server: Flask):
-    module_name = 'base'
-    module = import_module(f'dash_web_app.{module_name}.routes')
-    server.register_blueprint(module.blueprint)
+    for module_name in ('base', 'dash_app1'):
+        module = import_module(f'dash_web_app.{module_name}.routes')
+        server.register_blueprint(module.blueprint)
 
 
 # def register_dashapp(server: Flask, layout, name: str):
