@@ -4,6 +4,8 @@ from . import blueprint
 
 
 @blueprint.route("/")
+# def route_default():
+#     return redirect(url_for('base.index'))
 @blueprint.route("/index")
 def index():
     """Landing page."""

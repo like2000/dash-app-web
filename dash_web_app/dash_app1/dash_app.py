@@ -8,7 +8,7 @@ from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask
 
-url_base = '/dash/app1/'
+url_base = '/dash/dash_app1/'
 
 
 def get_covid_dataset():
@@ -49,7 +49,14 @@ layout = html.Div([
 
 
 def Add_Dash(server: Flask):
-    app = Dash(server=server, url_base_pathname=url_base)
+    external_stylesheets = ["https://www.w3schools.com/w3css/4/w3.css", ]
+
+    app = Dash(
+        server=server,
+        url_base_pathname=url_base,
+        external_stylesheets=external_stylesheets,
+    )
+
     app.layout = layout
 
     @app.callback(
