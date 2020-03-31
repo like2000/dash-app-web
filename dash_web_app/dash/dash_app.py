@@ -67,3 +67,23 @@ def Add_Dash(server: Flask):
         return f'Your input is: {value}'
 
     return app.server
+
+# def register_dashapp(server: Flask, layout, name: str):
+#     external_stylesheets = ["https://www.w3schools.com/w3css/4/w3.css", ]
+#
+#     dashapp = Dash(server=server,
+#                    url_base_pathname=f'/{name}/',
+#                    # external_scripts=external_scripts,
+#                    # routes_pathname_prefix='/dash_app/',
+#                    external_stylesheets=external_stylesheets,
+#                    )
+#
+#     with server.app_context():
+#         dashapp.index_string = html_layout
+#         dashapp.layout = layout(get_covid_dataset)
+#
+#         # @dashapp.callback(Output('dash-container', 'children'), [Input(None, None)])
+#         # def callback():
+#         #     return get_covid_dataset()
+#
+#         return dashapp.server
