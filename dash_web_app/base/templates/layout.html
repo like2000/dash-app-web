@@ -1,31 +1,56 @@
 <!doctype html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard</title>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+        <title>{% block title %}{% endblock %} - Flaskr</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+        {% endblock %}
+    {% endblock %}
 </head>
+
 <body>
+<section class="content">
+    <header>
+        <div class="w3-display-container" style="height: 240px">
+            <img src="{{ url_for('static', filename='images/stats.jpeg') }}" alt="Stats"
+                 style="width: 100%; height:240px; object-fit: cover; opacity: 0.7;">
+            <div class="w3-display-middle w3-text-dark-gray w3-center w3-xxxlarge"
+                 style="text-shadow:1px 1px 0 #AAA; font-weight: bold;">Little Flask Dashboard Test Web App
+            </div>
+        </div>
 
-<div class="w3-display-container" style="height: 240px">
-    <img src="{{ url_for('static', filename='images/stats.jpeg') }}" alt="Stats"
-         style="width: 100%; height:240px; object-fit: cover; opacity: 0.7;">
-    <div class="w3-display-middle w3-text-dark-gray w3-center w3-xxxlarge"
-         style="text-shadow:1px 1px 0 #AAA; font-weight: bold;">Little Flask Dashboard Test Web App
-    </div>
-</div>
+        <div class="w3-container w3-light-gray w3-medium">
+            <br>
+            <button class="w3-button w3-centering w3-blue-gray material-icons"
+                    style="width: 180px; height: 40px; border: solid 1px darkslategray; margin: auto; display: block;">
+                home
+            </button>
+            <br>
+            <nav>
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="/dash/app1"><i class="fas fa-chart-line"></i> Embdedded Plotly Dash</a>
+            </nav>
+        </div>
 
-{% block body %}
-{% endblock %}
+        {% block header %}{% endblock %}
+    </header>
 
+    {% block content %}{% endblock %}
+</section>
 </body>
+
 </html>

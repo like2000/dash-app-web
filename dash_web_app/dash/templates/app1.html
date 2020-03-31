@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{{ super() }}
+{#{{ super() }}#}
 
 {% block title %} Dashboard 1 {% endblock title %}
 
@@ -16,9 +16,10 @@
                 <div class="dashboard_graph">
                     <div style="width: 100%; min-height:800px;">
                         <iframe
-                                noresize='noresize' ,
-                                style='position: absolute; background: transparent; width: 95%; height:100%;' ,
-                                src={{ dash_url }}, frameborder='2'>
+                                style='position: absolute; width: 78%; min-height: 100%;
+                                background: transparent; border: solid 1px gray;
+                                margin: 1%;'
+                                src={{ dash_url }}>
                         </iframe>
                     </div>
                     <div class="clearfix"></div>
