@@ -9,4 +9,5 @@ from . import blueprint
 @blueprint.route("/index")
 def index():
     """Landing page."""
+    print(f"Primary route: {index}")
     return render_template('index.html', variable=None)

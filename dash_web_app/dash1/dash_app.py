@@ -44,7 +44,8 @@ def get_covid_dataset():
 layout = html.Div([
     html.Div('This is dash app1'), html.Br(),
     dcc.Input(id='input_text'), html.Br(), html.Br(),
-    html.Div(id='target', className='w3-container w3-green w3-text-black w3-table', children=get_covid_dataset(), )
+    html.Div(id="output"), html.Br(), html.Br(),
+    html.Div(id='target', className='w3-container w3-green w3-text-black w3-table', children=get_covid_dataset())
 ])
 
 
@@ -60,9 +61,9 @@ def Add_Dash(server: Flask):
     app.layout = layout
 
     @app.callback(
-        Output('target', 'children'),
+        Output('output', 'children'),
         [Input('input_text', 'value')])
     def callback_fun(value):
-        return 'your input is {}'.format(value)
+        return f'Your input is: {value}'
 
     return app.server
