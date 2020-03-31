@@ -3,8 +3,8 @@ from importlib import import_module
 from flask import Blueprint
 from flask import Flask
 
-
 # from dash_web_app import dash_app1
+from dash_web_app.dash.dash_app import Add_Dash
 
 
 def register_blueprints(server: Flask):
@@ -52,6 +52,6 @@ def create_app():
 
     register_blueprints(server)
 
-    # server = Add_Dash(server)
+    server = Add_Dash(server)
 
     return server
