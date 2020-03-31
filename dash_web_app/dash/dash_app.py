@@ -8,7 +8,7 @@ from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask
 
-url_base = '/dash/dash_app1/'
+url_base = '/dash/app1/'
 
 
 def get_covid_dataset():

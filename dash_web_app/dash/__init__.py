@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-name = 'dash1'
+name = 'dash'
 
 blueprint = Blueprint(
     name + '_blueprint',

@@ -8,7 +8,7 @@ from flask import Flask
 
 
 def register_blueprints(server: Flask):
-    for module_name in ('base', 'dash1'):
+    for module_name in ('base', 'dash'):
         module = import_module(f'dash_web_app.{module_name}.routes')
         server.register_blueprint(module.blueprint)
 
