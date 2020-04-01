@@ -14,10 +14,9 @@ url_base = '/dash_application/app1/'
 def get_covid_dataset():
     arr = ['This is an example Plotly Dash App.']
 
-    today = pd.to_datetime('today').strftime('%Y-%m-%d')
-    today = (pd.to_datetime('today') - pd.to_timedelta('1 days')).strftime('%Y-%m-%d')
+    today = (pd.to_datetime('today') - pd.to_timedelta('0 days')).strftime('%Y-%m-%d')
     link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
-    print(f"\n*** Searching file {link}...")
+    print(f"\n*** Retrieving file {link}...")
 
     try:
         link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
@@ -26,7 +25,6 @@ def get_covid_dataset():
         link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xlsx'
         df = pd.read_excel(link)
 
-    print(f"\n*** Successfully read file {link} from ecdc.")
     print(df.head())
 
     table_preview = dash_table.DataTable(
