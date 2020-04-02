@@ -36,11 +36,9 @@ def read_covid_data() -> pd.DataFrame:
         print(f"\n*** Retrieving file {link}...")
         df = pd.read_excel(link)
 
-    print(df.head())
-
-    ##
     countries = df[countriesTag].unique()
-    print(countries)
+    # print(countries)
+    print(df.columns)
 
     # Filter
     ix = list(map(lambda c: c in countries, df[countriesTag]))
@@ -50,7 +48,7 @@ def read_covid_data() -> pd.DataFrame:
     da["AccumulatedCases"] = 0
     for cn in countries:
         ix = da[countriesTag] == cn
-        da["AccumulatedCases"][ix] = da.cases[ix][::-1].cumsum()
+        da.loc[ix, ("AccumulatedCases")] = da.cases[ix][::-1].cumsum()
 
     # %% Fine adjustments
     limit = 100
