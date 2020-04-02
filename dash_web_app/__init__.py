@@ -28,7 +28,8 @@ def create_app():
     register_extensions(server)
 
     server = Add_Dash(server)
-    print(server.url_map)
+
+    # print(server.url_map)
 
     @server.route("/")
     def home():
