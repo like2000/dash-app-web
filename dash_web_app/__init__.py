@@ -19,8 +19,8 @@ def create_app():
     server = Flask(
         __name__,
         static_folder='base/static'
-    )  # , instance_relative_config=False)
-    # app.config.from_object('config.Config')
+    )
+    # server.config.from_object('config.Config')
 
     register_blueprints(server)
     register_extensions(server)
