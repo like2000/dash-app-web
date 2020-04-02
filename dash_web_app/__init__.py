@@ -1,6 +1,8 @@
 from importlib import import_module
 
 from flask import Flask
+from flask import redirect
+from flask import url_for
 
 from dash_web_app.dash.app1 import Add_Dash
 
@@ -27,5 +29,9 @@ def create_app():
 
     server = Add_Dash(server)
     print(server.url_map)
+
+    @server.route("/")
+    def home():
+        return redirect(url_for('base_blueprint.index'))
 
     return server
