@@ -3,29 +3,61 @@ from urllib.error import HTTPError
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
+import numpy as np
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask
 
-url_base = '/dash_application/app1/'
+url_base = '/dash/app1/'
+
+countriesTag = 'countriesAndTerritories'
+countries = ['China', 'South_Korea', 'Japan',
+             # ' Singapore',
+             #  'Austria',
+             'France', 'Germany',
+             'Italy', 'Switzerland', 'United_Kingdom', 'United_States_of_America']
 
 
 def read_covid_data() -> pd.DataFrame:
-    today = (pd.to_datetime('today') - pd.to_timedelta('0 days')).strftime('%Y-%m-%d')
-    link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
-    print(f"\n*** Retrieving file {link}...")
+    # today = (pd.to_datetime('today') - pd.to_timedelta('0 days')).strftime('%Y-%m-%d')
+    # link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
 
     try:
-        link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xls'
+        today = (pd.to_datetime('today') - pd.to_timedelta('0 days')).strftime('%Y-%m-%d')
+        link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xlsx'
+        print(f"\n*** Retrieving file {link}...")
         df = pd.read_excel(link)
     except HTTPError as err:
+        today = (pd.to_datetime('today') - pd.to_timedelta('1 days')).strftime('%Y-%m-%d')
         link = f'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-{today}.xlsx'
+        print(f"\n*** Retrieving file {link}...")
         df = pd.read_excel(link)
 
     print(df.head())
 
-    return df
+    ##
+    countries = df[countriesTag].unique()
+    print(countries)
+
+    # Filter
+    ix = list(map(lambda c: c in countries, df[countriesTag]))
+    df = df[ix]
+    da = df.copy()
+
+    da["AccumulatedCases"] = 0
+    for cn in countries:
+        ix = da[countriesTag] == cn
+        da["AccumulatedCases"][ix] = da.cases[ix][::-1].cumsum()
+
+    # %% Fine adjustments
+    limit = 100
+    t0 = pd.to_datetime("2020-01-15")
+    da = da.loc[da['AccumulatedCases'] > limit]
+
+    return da
 
 
 def make_table_from_df(df: pd.DataFrame):
@@ -46,32 +78,43 @@ def make_table_from_df(df: pd.DataFrame):
 def make_line_from_df(df: pd.DataFrame):
     arr = ['This is an example Plotly Graph.']
 
+    ix = np.any([c == df[countriesTag] for c in countries], axis=0)
+    df = df[ix]
+    fig: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", color=countriesTag).update_traces(
+        mode='lines+markers')
+    print(type(fig))
+    for trace in fig.data:
+        trace.name = trace.name.split('=')[1]
     plot = dcc.Graph(
-        id='life-exp-vs-gdp',
-        figure={
-            'data': [
-                dict(
-                    x=df[df['continent'] == i]['gdp per capita'],
-                    y=df[df['continent'] == i]['life expectancy'],
-                    text=df[df['continent'] == i]['country'],
-                    mode='markers',
-                    opacity=0.7,
-                    marker={
-                        'size': 15,
-                        'line': {'width': 0.5, 'color': 'white'}
-                    },
-                    name=i
-                ) for i in df.continent.unique()
-            ],
-            'layout': dict(
-                xaxis={'type': 'log', 'title': 'GDP Per Capita'},
-                yaxis={'title': 'Life Expectancy'},
-                margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
-                legend={'x': 0, 'y': 1},
-                hovermode='closest'
-            )
-        }
+        id='graph-covid-overview',
+        figure=fig,
     )
+    # plot = dcc.Graph(
+    #     id='graph-covid-overview',
+    #     figure={
+    #         'data': [
+    #             dict(
+    #                 x=df[df[countriesTag] == i]['dateRep'],
+    #                 y=df[df[countriesTag] == i]['AccumulatedCases'],
+    #                 text=df[df[countriesTag] == i][countriesTag],
+    #                 name=i,
+    #                 mode='line',
+    #                 opacity=0.7,
+    #                 marker={
+    #                     'size': 15,
+    #                     'line': {'width': 2},  # , 'color': 'white'}
+    #                 },
+    #             ) for i in countries
+    #         ],
+    #         'layout': dict(
+    #             xaxis={'type': 'linear', 'title': 'Time after cross 100'},
+    #             yaxis={'type': 'linear', 'title': 'Covid-19 cases'},
+    #             # margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+    #             legend={'x': 0, 'y': 1},
+    #             hovermode='closest'
+    #         )
+    #     }
+    # )
     arr.append(plot)
 
     return arr
@@ -82,7 +125,7 @@ layout = html.Div([
     dcc.Input(id='input_text'), html.Br(), html.Br(),
     html.Div(id="output"), html.Br(), html.Br(),
     html.Div(id='target', className='w3-container w3-green w3-text-black w3-table',
-             children=make_table_from_df(read_covid_data()))
+             children=make_line_from_df(read_covid_data()))
 ])
 
 
