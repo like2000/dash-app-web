@@ -82,7 +82,8 @@ def make_line_from_df(df: pd.DataFrame):
     df = df[ix]
     fig: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", color=countriesTag).update_traces(
         mode='lines+markers')
-    print(type(fig))
+    fig.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
+    fig.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
     for trace in fig.data:
         trace.name = trace.name.split('=')[1]
     plot = dcc.Graph(

@@ -2,7 +2,7 @@ from importlib import import_module
 
 from flask import Flask
 
-from dash_web_app.dash.dash_app import Add_Dash
+from dash_web_app.dash.app1 import Add_Dash
 
 
 def register_blueprints(server: Flask):
