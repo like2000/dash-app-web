@@ -3,9 +3,9 @@ from flask import Blueprint
 name = 'dash'
 
 blueprint = Blueprint(
-    name + '_blueprint',
-    __name__,
-    url_prefix='/' + name,
+    import_name=__name__,
+    url_prefix=f'/{name}',
     static_folder='static',
+    name=name + '_blueprint',
     template_folder='templates',
 )

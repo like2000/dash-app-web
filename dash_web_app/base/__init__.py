@@ -3,9 +3,8 @@ from flask import Blueprint
 name = 'base'
 
 blueprint = Blueprint(
-    name + '_blueprint',
-    __name__,
-    url_prefix='/',
+    import_name=__name__,
     static_folder='static',
+    name=name + '_blueprint',
     template_folder='templates',
 )

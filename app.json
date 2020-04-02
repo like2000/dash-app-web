@@ -1,0 +1,7 @@
+{
+  "name": "Crown Conqueror",
+  "description": "A simple first Flask web application - using Dash",
+  "repository": "https://github.com/like2000/dash-app-web",
+  "logo": "https://node-js-sample.herokuapp.com/flask.png",
+  "keywords": ["flask", "dash", "python"]
+}

@@ -15,3 +15,5 @@
 
 Simple first experiment trying to publish a Dash-embedded-in-Flask web application. 
 The example is heavily inspired by: https://hackersandslackers.com/gaining-full-control-over-plotly-dash/
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
