@@ -15,8 +15,9 @@ url_base = '/dash/app1/'
 
 countriesTag = 'countriesAndTerritories'
 countries = ['China', 'South_Korea', 'Japan',
-             # ' Singapore',
-             #  'Austria',
+             'Singapore',
+             'Austria',
+             'Spain',
              'France', 'Germany',
              'Italy', 'Switzerland', 'United_Kingdom', 'United_States_of_America']
 
@@ -36,7 +37,7 @@ def read_covid_data() -> pd.DataFrame:
         print(f"\n*** Retrieving file {link}...")
         df = pd.read_excel(link)
 
-    countries = df[countriesTag].unique()
+    # countries = df[countriesTag].unique()
     # print(countries)
     print(df.columns)
 
@@ -50,10 +51,12 @@ def read_covid_data() -> pd.DataFrame:
         ix = da[countriesTag] == cn
         da.loc[ix, ("AccumulatedCases")] = da.cases[ix][::-1].cumsum()
 
-    # %% Fine adjustments
+    # Fine adjustments
     limit = 100
-    t0 = pd.to_datetime("2020-01-15")
     da = da.loc[da['AccumulatedCases'] > limit]
+    limit = 500
+    t_zeros = da[(da['AccumulatedCases'] > limit)].groupby('countriesAndTerritories')['dateRep'].min()
+    da['daysAfterCrossLimit'] = da.apply(lambda d: (d['dateRep'] - t_zeros[d[countriesTag]]).days, axis=1)
 
     return da
 
@@ -80,8 +83,9 @@ def make_line_from_df(df: pd.DataFrame):
     df = df[ix]
 
     fig: go.Figure = px.bar(df, x="dateRep", y="cases", title="Cases per day", color=countriesTag,
-                            facet_col=countriesTag,
-                            facet_col_wrap=3).update_xaxes(matches=None).update_yaxes(matches=None)
+                            height=1000, facet_col=countriesTag, facet_col_wrap=2).update_xaxes(
+        matches=None).update_yaxes(
+        matches=None)
     fig.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
     fig.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
     plot = dcc.Graph(
@@ -100,7 +104,8 @@ def make_line_from_df(df: pd.DataFrame):
     # )
     # arr.append(plot)
 
-    fig3: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", title="Accumulated cases", color=countriesTag,
+    fig3: go.Figure = px.scatter(df, x="daysAfterCrossLimit", y="AccumulatedCases", title="Accumulated cases",
+                                 color=countriesTag, height=600,
                                  log_y=True).update_traces(
         mode='lines+markers')
     fig3.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
