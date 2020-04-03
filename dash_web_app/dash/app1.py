@@ -78,17 +78,39 @@ def make_line_from_df(df: pd.DataFrame):
 
     ix = np.any([c == df[countriesTag] for c in countries], axis=0)
     df = df[ix]
-    fig: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", color=countriesTag).update_traces(
-        mode='lines+markers')
+
+    fig: go.Figure = px.bar(df, x="dateRep", y="cases", title="Cases per day", color=countriesTag,
+                            facet_col=countriesTag,
+                            facet_col_wrap=3).update_xaxes(matches=None).update_yaxes(matches=None)
     fig.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
     fig.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
-    # for trace in fig.data:
-    #     print(trace)
-    #     trace.name = trace.name.split('=')[1]
     plot = dcc.Graph(
-        id='graph-covid-overview',
+        id='graph-covid-bars',
         figure=fig,
     )
+    arr.append(plot)
+
+    # fig2: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", color=countriesTag).update_traces(
+    #     mode='lines+markers')
+    # fig2.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
+    # fig2.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
+    # plot = dcc.Graph(
+    #     id='graph-covid-overview',
+    #     figure=fig2,
+    # )
+    # arr.append(plot)
+
+    fig3: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", title="Accumulated cases", color=countriesTag,
+                                 log_y=True).update_traces(
+        mode='lines+markers')
+    fig3.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
+    fig3.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
+    plot = dcc.Graph(
+        id='graph-covid-overview-log',
+        figure=fig3,
+    )
+    arr.append(plot)
+
     # plot = dcc.Graph(
     #     id='graph-covid-overview',
     #     figure={
@@ -115,7 +137,7 @@ def make_line_from_df(df: pd.DataFrame):
     #         )
     #     }
     # )
-    arr.append(plot)
+    # arr.append(plot)
 
     return arr
 
