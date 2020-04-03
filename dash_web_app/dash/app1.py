@@ -82,8 +82,9 @@ def make_line_from_df(df: pd.DataFrame):
         mode='lines+markers')
     fig.update_xaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
     fig.update_yaxes(showline=True, linewidth=2, linecolor='rgb(64, 64, 64)', mirror=True)
-    for trace in fig.data:
-        trace.name = trace.name.split('=')[1]
+    # for trace in fig.data:
+    #     print(trace)
+    #     trace.name = trace.name.split('=')[1]
     plot = dcc.Graph(
         id='graph-covid-overview',
         figure=fig,
