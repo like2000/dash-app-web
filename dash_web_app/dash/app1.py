@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask
+from flask.helpers import get_root_path
 
 url_base = '/dash/app1/'
 
@@ -151,19 +152,22 @@ layout = html.Div([
     html.Div('This is dash app1'), html.Br(),
     dcc.Input(id='input_text'), html.Br(), html.Br(),
     html.Div(id="output"), html.Br(), html.Br(),
-    html.Div(id='target', className='w3-container w3-green w3-text-black w3-table',
+    html.Div(id='target', className='w3-container w3-table div-dash',
              children=make_line_from_df(read_covid_data()))
 ])
 
 
 def Add_Dash(server: Flask):
-    external_stylesheets = ["https://www.w3schools.com/w3css/4/w3.css", ]
+    external_stylesheets = ["/static/css/style.css",
+                            "https://www.w3schools.com/w3css/4/w3.css", ]
 
     app = Dash(
         server=server,
         url_base_pathname=url_base,
         external_stylesheets=external_stylesheets,
+        assets_folder=get_root_path(__name__) + '/assets/',
     )
+    print(get_root_path(__name__) + f'/assets/')
 
     app.layout = layout
 

@@ -1,0 +1,10 @@
+.div-dash {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    background: #cddc39;
+    color: red;
+    min-height: 300vh;
+    font-weight: bold;
+}

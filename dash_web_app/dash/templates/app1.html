@@ -9,24 +9,13 @@
 {% endblock stylesheets %}
 
 {% block content %}
+
     <h3>Testing the iframe here:</h3>
-    <div class="right_col" role="main">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="dashboard_graph">
-                    <div style="width: 100%; min-height:800px;">
-                        <iframe
-                                scrolling="yes"
-                                style='width: 100%; min-height: 100vh;
-                                background: transparent; border: solid 0px gray; padding: 10px'
-                                src={{ dash_url }}>
-                        </iframe>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <iframe class="iframe-dash"
+            scrolling="no"
+            src={{ dash_url }}>
+    </iframe>
+
 {% endblock content %}
 
 {% block javascripts %}
