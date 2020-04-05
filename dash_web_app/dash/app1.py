@@ -78,7 +78,7 @@ def make_table_from_df(df: pd.DataFrame):
 
 
 def make_line_from_df(df: pd.DataFrame):
-    arr = ['This is an example Plotly Graph.']
+    arr = ['This is an example Plotly Graph:']
 
     ix = np.any([c == df[countriesTag] for c in countries], axis=0)
     df = df[ix]
@@ -94,6 +94,7 @@ def make_line_from_df(df: pd.DataFrame):
         figure=fig,
     )
     arr.append(plot)
+    print(arr)
 
     # fig2: go.Figure = px.scatter(df, x="dateRep", y="AccumulatedCases", color=countriesTag).update_traces(
     #     mode='lines+markers')
@@ -149,10 +150,11 @@ def make_line_from_df(df: pd.DataFrame):
 
 
 layout = html.Div([
-    html.Div('This is dash app1'), html.Br(),
-    dcc.Input(id='input_text'), html.Br(), html.Br(),
+    html.Div('This is dash app1'),
+    dcc.Input(id='input_text'), html.Br(),
     html.Div(id="output"), html.Br(), html.Br(),
-    html.Div(id='target', className='w3-container w3-table div-dash',
+    html.Div(id='target',
+             className='w3-container w3-table div-dash',
              children=make_line_from_df(read_covid_data()))
 ])
 
