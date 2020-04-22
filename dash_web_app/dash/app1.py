@@ -20,7 +20,7 @@ countries = ['China', 'South_Korea', 'Japan',
              'Austria',
              'Spain',
              'France', 'Germany',
-             'Italy', 'Switzerland', 'United_Kingdom', 'United_States_of_America']
+             'Italy', 'Switzerland', 'Sweden', 'United_States_of_America']
 
 
 def read_covid_data() -> pd.DataFrame:
